@@ -1,4 +1,6 @@
+#pragma once
 #include <vector>
+#include <functional>
 
 class Matrix{
     public:
@@ -13,4 +15,6 @@ class Matrix{
     Matrix DotProduct(Matrix targetMatrix);
     Matrix ScalarMultiple(float s);
     Matrix Transpose();
+    //figure out this one later
+    //Matrix ApplyFunction(std::function<float(float)> func);
 };
