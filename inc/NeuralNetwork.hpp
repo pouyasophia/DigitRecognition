@@ -1,3 +1,4 @@
+#pragma once
 #include <random>
 #include "Matrix.hpp"
 
@@ -9,4 +10,6 @@ std::vector<Matrix> _aValueMatrices;
 std::vector<float> _inputVector;
 float _learningRate;
 NeuralNetwork(std::vector<float> inputvec, float rate);
+float Sigmoid(float x);
+bool FeedForward(std::vector<float> inputs);
 };
