@@ -79,4 +79,19 @@ Matrix Matrix::Transpose(){
 //     return output;
 // };
 
+//Hadamard Product
+Matrix Matrix::ElementMultiply(Matrix targetMatrix){
+
+//check if matrices are same dimensions-> requirement for Hadamard product
+
+    assert(targetMatrix._rows == _rows && targetMatrix._columns == _columns);
+       
+    Matrix results(_rows,_columns);
+    for(int r = 0; r<_rows; ++r){
+        for(int c = 0; c<_columns; ++c){
+            results.ValueAt(r,c) = ValueAt(r,c)*targetMatrix.ValueAt(r,c);
+        }
+    }
+    return results;
+};
 

@@ -15,6 +15,7 @@ class Matrix{
     Matrix DotProduct(Matrix targetMatrix);
     Matrix ScalarMultiple(float s);
     Matrix Transpose();
+    Matrix ElementMultiply(Matrix targetMatrix);
     //figure out this one later
     //Matrix ApplyFunction(std::function<float(float)> func);
 };
