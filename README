@@ -1,4 +1,4 @@
-This project is a neural network. It predicts the outcome of an XOR gate. 
+This project is a neural network. This project uses a Matrix class with all the matrix functions for math operations used in the NeuralNetwork class. The primary working class is NeuralNetwork which uses a FeedBack and FeedForward function. The main file calls NeuralNetwork for an epoch to predict the outcome of an XOR gate. All .cpp files are included in the src/ directory, and all .hpp files are located in the inc/ directory.
 
 To build: 
 make clean; make
