@@ -1,1 +1,10 @@
+This project is a neural network. It predicts the outcome of an XOR gate. 
+
 To build: 
+make clean; make
+
+To run the code:
+./build/digRec 
+
+To run debug:
+make debug
