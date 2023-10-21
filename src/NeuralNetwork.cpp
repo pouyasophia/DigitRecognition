@@ -15,16 +15,16 @@ NeuralNetwork::NeuralNetwork(std::vector<float> inputvec, float rate)
   for (int k = 0; k < _inputVector.size() - 1; k++) {
 
     Matrix weightMat(_inputVector[k], _inputVector[k + 1]);
-    for (int r = 0; r < weightMat._rows; r++) {
-      for (int c = 0; c < weightMat._columns; c++) {
+    for (int r = 0; r < weightMat.getRows(); r++) {
+      for (int c = 0; c < weightMat.getCols(); c++) {
         weightMat.ValueAt(r, c) = distr(generator);
       }
     }
     _weightMatrices.push_back(weightMat);
 
     Matrix biasMat(1, _inputVector[k + 1]);
-    for (int r = 0; r < biasMat._rows; r++) {
-      for (int c = 0; c < biasMat._columns; c++) {
+    for (int r = 0; r < biasMat.getRows(); r++) {
+      for (int c = 0; c < biasMat.getCols(); c++) {
         biasMat.ValueAt(r, c) = distr(generator);
       }
     }
@@ -48,8 +48,7 @@ bool NeuralNetwork::FeedForward(std::vector<float> trainInputs) {
 
   // initialize matrix to store values
   Matrix valuesMat(1, trainInputs.size());
-  for (int i = 0; i < trainInputs.size(); i++)
-    valuesMat._values[i] = trainInputs[i];
+  valuesMat.setValues(trainInputs);
 
   for (int x = 0; x < _weightMatrices.size(); x++) {
     // first matrix is input
@@ -60,12 +59,9 @@ bool NeuralNetwork::FeedForward(std::vector<float> trainInputs) {
 
     valuesMat = valuesMat.Add(_biasMatrices[x]);
 
-    // go back later and implement applyfunction
-    // valuesMat = valuesMat.ApplyFunction(Sigmoid);
-
     // loop through values mat and apply sigmoid function
-    for (int r = 0; r < valuesMat._rows; r++) {
-      for (int c = 0; c < valuesMat._columns; c++) {
+    for (int r = 0; r < valuesMat.getRows(); r++) {
+      for (int c = 0; c < valuesMat.getCols(); c++) {
         valuesMat.ValueAt(r, c) = Sigmoid(valuesMat.ValueAt(r, c));
       }
     };
@@ -84,7 +80,7 @@ bool NeuralNetwork::FeedBack(std::vector<float> trainOutputs) {
   }
 
   Matrix errors(1, trainOutputs.size());
-  errors._values = trainOutputs;
+  errors.setValues(trainOutputs);
 
   // solve last layer of errors
   // errors = desired value - calculated value
@@ -101,9 +97,9 @@ bool NeuralNetwork::FeedBack(std::vector<float> trainOutputs) {
     // Matrix dOutputs = _aValueMatrices[i+1]
     // loop through values mat and apply derivative sigmoid function
 
-    Matrix dOutputs(1, _aValueMatrices[i + 1]._columns);
-    for (int r = 0; r < dOutputs._rows; r++) {
-      for (int c = 0; c < dOutputs._columns; c++) {
+    Matrix dOutputs(1, _aValueMatrices[i + 1].getCols());
+    for (int r = 0; r < dOutputs.getRows(); r++) {
+      for (int c = 0; c < dOutputs.getCols(); c++) {
         dOutputs.ValueAt(r, c) = Dsigmoid(_aValueMatrices[i + 1].ValueAt(r, c));
       };
     };
@@ -124,5 +120,5 @@ bool NeuralNetwork::FeedBack(std::vector<float> trainOutputs) {
 };
 
 std::vector<float> NeuralNetwork::getPredictions() {
-  return _aValueMatrices.back()._values;
+  return _aValueMatrices.back().getValues();
 }

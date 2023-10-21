@@ -5,8 +5,8 @@ int main() {
 
   // extract mnist training data
   MnistExtractor mnistExt;
-  mnistExt.readMnist(
-      "/home/sophiapouya/udacity/neuralNetworks/t10k-images.idx3-ubyte");
+  mnistExt.readMnistImage("../t10k-images.idx3-ubyte");
+  mnistExt.readMnistLabel("../t10k-labels.idx1-ubyte");
 
   // creating neural network
   // 2 input neurons, 3 hidden neurons and 1 output neuron
@@ -19,7 +19,7 @@ int main() {
   std::vector<std::vector<float>> targetOutputs = {
       {0.0f}, {0.0f}, {1.0f}, {1.0f}};
 
-  int epoch = 1000;
+  int epoch = 100000;
 
   // training the neural network with randomized data
   std::cout << "training started\n";

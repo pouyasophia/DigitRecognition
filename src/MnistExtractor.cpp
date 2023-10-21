@@ -13,9 +13,9 @@ int MnistExtractor::reverseInt(int x) {
   return ((int)c1 << 24) + ((int)c2 << 16) + ((int)c3 << 8) + c4;
 };
 
-void MnistExtractor::readMnist(std::string path) {
+void MnistExtractor::readMnistImage(std::string path) {
   std::ifstream file(path, std::ios::binary);
-  std::ofstream outfile("mnistOutput.txt", std::ios::out);
+  std::ofstream outfile("mnistImageOutput.txt", std::ios::out);
   if (file.is_open()) {
     int magic_num = 0;
     int num_of_images = 0;
@@ -42,6 +42,29 @@ void MnistExtractor::readMnist(std::string path) {
         outfile << "\n";
       }
       outfile << "\n";
+    }
+  }
+  file.close();
+  outfile.close();
+};
+
+void MnistExtractor::readMnistLabel(std::string path) {
+  std::ifstream file(path, std::ios::binary);
+  std::ofstream outfile("mnistLabelOutput.txt", std::ios::out);
+
+  if (file.is_open()) {
+    int magic_num = 0;
+    int num_of_labels = 0;
+
+    file.read((char *)&magic_num, sizeof(magic_num));
+    magic_num = reverseInt(magic_num);
+    file.read((char *)&num_of_labels, sizeof(num_of_labels));
+    num_of_labels = reverseInt(num_of_labels);
+
+    for (int i = 0; i < num_of_labels; ++i) {
+      unsigned char temp = 0;
+      file.read((char *)&temp, sizeof(temp));
+      outfile << u_int32_t(temp) << "\n";
     }
   }
 };
