@@ -1,4 +1,5 @@
 #include "Matrix.hpp"
+#include "MnistExtractor.hpp"
 #include <random>
 
 class NeuralNetwork {
