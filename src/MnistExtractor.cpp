@@ -35,17 +35,13 @@ void MnistExtractor::readMnist(std::string path) {
       for (int r = 0; r < n_rows; ++r) {
 
         for (int c = 0; c < n_cols; ++c) {
-          float temp = 0;
+          unsigned char temp = 0;
           file.read((char *)&temp, sizeof(temp));
-          outfile << temp << " ";
+          outfile << u_int32_t(temp) << " ";
         }
         outfile << "\n";
       }
       outfile << "\n";
     }
-    outfile << magic_num << " ";
-    outfile << num_of_images << " ";
-    outfile << n_rows << " ";
-    outfile << n_cols << " ";
   }
 };
