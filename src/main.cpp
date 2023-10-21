@@ -6,7 +6,7 @@ int main() {
   // creating neural network
   // 2 input neurons, 3 hidden neurons and 1 output neuron
   std::vector<float> inputVec = {2, 3, 1};
-  NeuralNetwork nn(inputVec, .1);
+  NeuralNetwork nn(inputVec, .1f);
 
   // sample dataset
   std::vector<std::vector<float>> targetInputs = {
@@ -14,7 +14,7 @@ int main() {
   std::vector<std::vector<float>> targetOutputs = {
       {0.0f}, {0.0f}, {1.0f}, {1.0f}};
 
-  int epoch = 10000;
+  int epoch = 1000000;
 
   // training the neural network with randomized data
   std::cout << "training started\n";
