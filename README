@@ -1,4 +1,4 @@
-This project is a neural network. This project uses a Matrix class with all the matrix functions for math operations used in the NeuralNetwork class. The primary working class is NeuralNetwork which uses a FeedBack and FeedForward function. The main file calls NeuralNetwork for an epoch to predict the outcome of an XOR gate. All .cpp files are included in the src/ directory, and all .hpp files are located in the inc/ directory.
+This project is a simple multilayer perceptrons (feed forward) neural network made from scratch. This project uses a Matrix class with all the matrix functions for math operations used in the NeuralNetwork class. The primary working class is NeuralNetwork which uses a FeedBack and FeedForward function. The main file calls NeuralNetwork for an epoch to predict the outcome of an XOR gate. All .cpp files are included in the src/ directory, and all .hpp files are located in the inc/ directory.
 
 To build: 
 make clean; make
@@ -9,12 +9,3 @@ To run the code:
 To run debug:
 make debug
 
-Rubric Points Addressed:
-- Loop, Functions, I/O
-- The project demonstrates an understanding of C++ functions and control structures.
-
-Object Oriented Programming
-- The project uses Object Oriented Programming techniques.
-- Classes use appropriate access specifiers for class members.
-- Class constructors utilize member initialization lists.
-- Classes abstract implementation details from their interfaces.
