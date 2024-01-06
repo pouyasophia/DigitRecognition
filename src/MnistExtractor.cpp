@@ -1,4 +1,6 @@
 #include "../inc/MnistExtractor.hpp"
+#include <algorithm>
+#include <cctype>
 #include <fstream>
 #include <iostream>
 
@@ -15,7 +17,15 @@ int MnistExtractor::reverseInt(int x) {
 
 void MnistExtractor::readMnistImage(std::string path) {
   std::ifstream file(path, std::ios::binary);
-  std::ofstream outfile("mnistImageOutput.txt", std::ios::out);
+
+  // clean up path name
+  path.erase(
+      std::remove_if(path.begin(), path.end(),
+                     [](auto const &c) -> bool { return !std::isalnum(c); }),
+      path.end());
+
+  std::string tempPath = path + "_ouput.txt";
+  std::ofstream outfile(tempPath, std::ios::out);
   if (file.is_open()) {
     int magic_num = 0;
     int num_of_images = 0;
@@ -30,27 +40,41 @@ void MnistExtractor::readMnistImage(std::string path) {
     n_rows = reverseInt(n_rows);
     file.read((char *)&n_cols, sizeof(n_cols));
     n_cols = reverseInt(n_cols);
+    float imageSize = 255;
+    for (u_int32_t i = 0; i < num_of_images; ++i) {
+      float tempFloat;
 
-    for (int i = 0; i < num_of_images; ++i) {
-      for (int r = 0; r < n_rows; ++r) {
+      for (int r = 0; r < n_rows * n_cols; ++r) {
 
-        for (int c = 0; c < n_cols; ++c) {
-          unsigned char temp = 0;
-          file.read((char *)&temp, sizeof(temp));
-          outfile << u_int32_t(temp) << " ";
-        }
-        outfile << "\n";
+        unsigned char temp = 0;
+        file.read((char *)&temp, sizeof(temp));
+        tempFloat = (float(temp) / imageSize);
+
+        if (r % 27 != 0)
+          outfile << tempFloat << " ";
+        else
+          outfile << "\n";
+        outfile << tempFloat << " ";
+
+        _mnistImages.emplace_back(tempFloat);
       }
-      outfile << "\n";
     }
+    file.close();
+    outfile.close();
   }
-  file.close();
-  outfile.close();
 };
 
 void MnistExtractor::readMnistLabel(std::string path) {
   std::ifstream file(path, std::ios::binary);
-  std::ofstream outfile("mnistLabelOutput.txt", std::ios::out);
+
+  // clean up path name
+  path.erase(
+      std::remove_if(path.begin(), path.end(),
+                     [](auto const &c) -> bool { return !std::isalnum(c); }),
+      path.end());
+
+  std::string tempPath = path + "_ouput.txt";
+  std::ofstream outfile(tempPath, std::ios::out);
 
   if (file.is_open()) {
     int magic_num = 0;
@@ -60,11 +84,17 @@ void MnistExtractor::readMnistLabel(std::string path) {
     magic_num = reverseInt(magic_num);
     file.read((char *)&num_of_labels, sizeof(num_of_labels));
     num_of_labels = reverseInt(num_of_labels);
-
+    int count = 0;
     for (int i = 0; i < num_of_labels; ++i) {
       unsigned char temp = 0;
       file.read((char *)&temp, sizeof(temp));
-      outfile << u_int32_t(temp) << "\n";
+      _mnistLabels.emplace_back(float(temp));
+
+      // print vector to outfile
+      outfile << _mnistLabels[i] << " ";
     }
+
+    file.close();
+    outfile.close();
   }
 };
